@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  font-family: Times, Times New Roman, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: radial-gradient(circle, rgba(211,246,24,1) 18%, rgba(40,240,16,1) 100%);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+button {
+  cursor: pointer;
+}
