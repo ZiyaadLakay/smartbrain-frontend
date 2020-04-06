@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Navigation from './components/Navigation/Navigation.js'
+import ChooseForm from './components/ChooseForm/ChooseForm.js'
 import Rank from './components/Rank/Rank.js'
 import SignIn from './components/SignIn/SignIn.js'
 import Register from './components/Register/Register.js'
@@ -24,8 +25,10 @@ const particleOp =
     }
 }
 
+//Setting the Initial State
 const initialState = {
       input:'',
+      call:'',
       imgUrl:'',
       box: {},
       route: 'signin',
@@ -132,22 +135,41 @@ class App extends Component {
     }
   }
 
+  onChoose = (call) => {
+    this.setState({call:call})
+  }
+
   render(){
-    const {imgUrl, isSignedIn,route,box,user} = this.state;
+    const {imgUrl, isSignedIn,route,box,user,call} = this.state;
     return (
       <div className="App">
         <Particles className='particles' params={particleOp} />
-          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
+          <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} onChoose={this.onChoose}/>
           {route === 'home' 
-              ? <div>
-                  <Rank name={user.name} entries={user.entries}/>
-                  <Logo />
-                  <ImageLinkForm 
-                    onInputChange={this.onInputChange} 
-                    onSubmit= {this.onSubmit}
-                  />
-                  <FaceRecognition box={box} imgUrl = {imgUrl}/>
-              </div>
+              ? ( call === ''
+
+                  ? <div className="ChooseAPI">
+                      <ChooseForm 
+                        onRouteChange={this.onRouteChange}
+                        onChoose={this.onChoose}
+                      />
+                    </div>
+
+                    :( call === 'Face'
+
+                        ?<div className="FaceDetect"> 
+                          <Rank name={user.name} entries={user.entries}/>
+                          <Logo />
+                          <ImageLinkForm 
+                            onInputChange={this.onInputChange} 
+                            onSubmit= {this.onSubmit}
+                          />
+                          <FaceRecognition box={box} imgUrl = {imgUrl}/>
+                        </div>
+
+                        :<div className="CelebDetect">Celeb App</div>
+                      )
+              )
               :(
                 route === 'signin' 
                     ?<SignIn 
