@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Navigation from './components/Navigation/Navigation.js'
 import ChooseForm from './components/ChooseForm/ChooseForm.js'
+import CelebDetect from './components/CelebDetect/CelebDetect.js'
 import Rank from './components/Rank/Rank.js'
 import SignIn from './components/SignIn/SignIn.js'
 import Register from './components/Register/Register.js'
@@ -31,8 +32,9 @@ const initialState = {
       call:'',
       imgUrl:'',
       box: {},
-      route: 'signin',
-      isSignedIn:false,
+      celebrity:'',
+      route: 'home',
+      isSignedIn:true,
       user:{
         id:'',
         name:'',
@@ -96,6 +98,7 @@ class App extends Component {
         headers: {'Content-Type':'application/json; charset=utf-8'},
         body: JSON.stringify({
             input:this.state.input,
+            call:this.state.call
         })
     })
     .then(response => response.json())
@@ -114,14 +117,21 @@ class App extends Component {
         })
         .catch(console.log)
       }
-      //Displaying box around face
-      this.displayFaceBox(this.calculateFaceLocation(response))
+
+      if(this.state.call === 'Face'){
+        this.displayFaceBox(this.calculateFaceLocation(response))
+      }
+      else{
+        console.log(this.state.celebrity)
+      }
+        
     })
     //catching error
     .catch(err => console.log(err));
     
   }
 
+  // Changing Route call
   onRouteChange = (route) => {
 
     this.setState({route:route});
@@ -135,12 +145,13 @@ class App extends Component {
     }
   }
 
+  // Choosing which api to use
   onChoose = (call) => {
     this.setState({call:call})
   }
 
   render(){
-    const {imgUrl, isSignedIn,route,box,user,call} = this.state;
+    const {imgUrl, isSignedIn,route,box,user,call,celebrity} = this.state;
     return (
       <div className="App">
         <Particles className='particles' params={particleOp} />
@@ -160,6 +171,10 @@ class App extends Component {
                         ?<div className="FaceDetect"> 
                           <Rank name={user.name} entries={user.entries}/>
                           <Logo />
+                          <h1>Face Detection App</h1>
+                          <p className='f6'>
+                              {'This Magic Brain will let you upload any image and it will draw a box around the Face'}
+                            </p>
                           <ImageLinkForm 
                             onInputChange={this.onInputChange} 
                             onSubmit= {this.onSubmit}
@@ -167,7 +182,19 @@ class App extends Component {
                           <FaceRecognition box={box} imgUrl = {imgUrl}/>
                         </div>
 
-                        :<div className="CelebDetect">Celeb App</div>
+                        :<div className="CelebDetect">
+                        <Rank name={user.name} entries={user.entries}/>
+                        <Logo />
+                          <h1>Celebrity Look Alike App</h1>
+                          <p className='f6'>
+                              {'This Magic Brain will let you upload any image and it will detect which celebrity it mostly resembles'}
+                            </p>
+                            <ImageLinkForm 
+                              onInputChange={this.onInputChange} 
+                              onSubmit= {this.onSubmit}
+                            />
+                            <CelebDetect celebrity={celebrity}/>
+                        </div>
                       )
               )
               :(
