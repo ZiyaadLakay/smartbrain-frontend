@@ -185,15 +185,15 @@ class App extends Component {
                         :<div className="CelebDetect">
                         <Rank name={user.name} entries={user.entries}/>
                         <Logo />
-                          <h1>Celebrity Look Alike App</h1>
-                          <p className='f6'>
+                          <h1>Celebrity Look Alike App (COMING SOON)</h1>
+                          {/* <p className='f6'>
                               {'This Magic Brain will let you upload any image and it will detect which celebrity it mostly resembles'}
                             </p>
                             <ImageLinkForm 
                               onInputChange={this.onInputChange} 
                               onSubmit= {this.onSubmit}
                             />
-                            <CelebDetect celebrity={celebrity}/>
+                            <CelebDetect celebrity={celebrity}/> */}
                         </div>
                       )
               )
