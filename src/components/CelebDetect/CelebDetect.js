@@ -3,7 +3,9 @@ import React from 'react';
 const CelebDetect = ({celebrity}) => {
     return(
         <div>
-            {celebrity}
+                {celebrity}
+            {/* <img id='inputImage' alt="img" src={celebrity} width='500px' height='auto' /> */}
+            
         </div>
     );
 }

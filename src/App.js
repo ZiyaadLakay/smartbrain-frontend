@@ -87,6 +87,10 @@ class App extends Component {
     this.setState({box:box})
   }
 
+  //Displaying Celebrity
+  displayCeleb = (res) => {
+    this.setState({celebrity:res.outputs[0].data.regions[0].data.concepts[0].name})
+  }
   onInputChange = (event) => {
     this.setState({input:event.target.value})
   }
@@ -122,7 +126,7 @@ class App extends Component {
         this.displayFaceBox(this.calculateFaceLocation(response))
       }
       else{
-        console.log(this.state.celebrity)
+        this.displayCeleb(response)
       }
         
     })
@@ -186,14 +190,14 @@ class App extends Component {
                         <Rank name={user.name} entries={user.entries}/>
                         <Logo />
                           <h1>Celebrity Look Alike App (COMING SOON)</h1>
-                          {/* <p className='f6'>
+                          <p className='f6'>
                               {'This Magic Brain will let you upload any image and it will detect which celebrity it mostly resembles'}
                             </p>
                             <ImageLinkForm 
                               onInputChange={this.onInputChange} 
                               onSubmit= {this.onSubmit}
                             />
-                            <CelebDetect celebrity={celebrity}/> */}
+                            <CelebDetect celebrity={celebrity}/>
                         </div>
                       )
               )
